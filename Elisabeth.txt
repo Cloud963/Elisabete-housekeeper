@@ -1,0 +1,35 @@
+Elisabeth
+
+Eaguiar408@gmail.com
+
+Aqui vai o resumo do que a **Elisabete Aguiar** pediu para construir no site dela:
+
+**Tipo de negócio:** Empresa de limpeza (cleaning service), ela trabalha sozinha (às vezes com ajudante).
+
+**O que ela pediu para o site:**
+
+O site é para apresentar o serviço de limpeza dela de forma profissional. Ela quer apresentar os serviços que oferece, contar como começou a limpar, sua experiência e sua preferência de serviço — basicamente um storytelling da carreira dela. Ela já tem um Direct.me (direct.me/elisabete_aguiar_cleaning), mas quer algo mais completo e profissional.
+
+**Funcionalidades e requisitos específicos:**
+
+- **Idioma:** O site tem que ser em inglês.
+- **Página única (one-page):** Tudo em uma página central com todas as informações, para ficar mais barato de manter online.
+- **Logo em destaque:** Ela quer que o cliente veja o logo dela (feito no Canva, precisa estar vetorizado em PNG).
+- **Foto dela com a farda:** Quer colocar uma foto dela de uniforme no rodapé, junto com as informações de contato.
+- **Botões de acesso às redes sociais:** Facebook, telefone e Instagram.
+- **Seção de produtos:** Botão com produtos que ela usa da Amazon ("Products we use") e uma seção separada para serviços ("Our services").
+- **Apresentação do trabalho com fotos e vídeos.**
+- **Agenda online:** Ela gostou da ideia de agenda para agendamentos, mas alertou que clientes mudam muito e que ela precisa dar o preço antes (depois de ver a casa/serviço). Ela também quer poder preencher a agenda.
+- **Aparecer no Google (SEO).**
+- **Cores:** Azul (seguindo a temática da logo), mas não quer que seja tudo azul — quer que o logo se destaque.
+- **Hospedagem:** Ela já pagou o Wix e vai mandar as informações de acesso para incorporar/linkar o domínio.
+
+**Sobre o pagamento:** Ficou combinado 500€ em parcelas (200 + 150 + 150), pagamento via PayPal.
+
+
+https://reactbits.dev/text-animations/text-type
+https://reactbits.dev/components/border-glow
+https://reactbits.dev/text-animations/shiny-text
+https://reactbits.dev/components/masonry
+https://reactbits.dev/animations/glare-hover
+https://reactbits.dev/animations/click-spark
