@@ -175,7 +175,7 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600;line-height:1.2
 .products-content p{color:var(--text-mid);font-size:.98rem;line-height:1.7;margin-bottom:20px}
 .btn-amazon{display:inline-flex;align-items:center;gap:10px;background:#232F3E;color:var(--white);padding:13px 26px;border-radius:50px;font-weight:600;font-size:.9rem;transition:var(--transition)}
 .btn-amazon:hover{background:#131921;transform:translateY(-2px);box-shadow:var(--shadow-md)}
-.products-visual{flex:0 0 250px;height:170px;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;color:var(--text-light);font-size:.84rem;text-align:center}
+.products-visual{flex:0 0 300px;height:210px;border-radius:var(--radius);box-shadow:var(--shadow-md);overflow:hidden;position:relative;background:#000}.prod-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}.prod-slide.active{opacity:1}.prod-slide img{width:100%;height:100%;object-fit:cover;display:block}.prod-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(30,58,90,.35) 0%,transparent 60%);pointer-events:none;z-index:1}.prod-dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:6px;z-index:2}.prod-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.45);cursor:pointer;transition:background .3s}.prod-dot.active{background:var(--teal)}
 
 /* BOOKING */
 .booking{padding:100px 0;background:var(--cream-bg)}
@@ -452,8 +452,28 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600;line-height:1.2
 <section class="products" id="products">
   <div class="container">
     <div class="products-inner">
-      <div class="products-content fade-in"><div class="section-label">Products We Use</div><h2>Quality products for quality results</h2><p>We only use trusted, effective cleaning products. Curious about what we bring to every job? Check out our curated list on Amazon.</p><a href="#" class="btn-amazon" target="_blank" rel="noopener">🛒 Shop Products on Amazon</a></div>
-      <div class="products-visual fade-in fade-d2">🧴 Product photos<br>coming soon</div>
+      <div class="products-content fade-in"><div class="section-label">Products We Use</div><h2>Quality products for quality results</h2><p>We only use trusted, effective cleaning products. Curious about what we bring to every job? Check out our curated list on Amazon.</p><a href="https://www.amazon.com/hz/wishlist/ls/XW6KWDX4WL9Y?ref_=wl_share" class="btn-amazon" target="_blank" rel="noopener">🛒 Shop Products on Amazon</a></div>
+      <div class="products-visual fade-in fade-d2" id="prod-carousel">
+        <div class="prod-slide active"><img src="https://m.media-amazon.com/images/I/516U-iDsxgL._SL300_.jpg" alt="Cleaning product"></div>
+        <div class="prod-slide"><img src="https://m.media-amazon.com/images/I/31yPDTbCIAL._SL300_.jpg" alt="Cleaning product"></div>
+        <div class="prod-slide"><img src="https://m.media-amazon.com/images/I/41elxAohI3L._SL300_.jpg" alt="Cleaning product"></div>
+        <div class="prod-slide"><img src="https://m.media-amazon.com/images/I/41nPyGt7rpL._SL300_.jpg" alt="Cleaning product"></div>
+        <div class="prod-slide"><img src="https://m.media-amazon.com/images/I/41RcN6uTv6L._SL300_.jpg" alt="Cleaning product"></div>
+        <div class="prod-slide"><img src="https://m.media-amazon.com/images/I/41Jq7blakJL._SL300_.jpg" alt="Cleaning product"></div>
+        <div class="prod-slide"><img src="https://m.media-amazon.com/images/I/512CafsXFSL._SL300_.jpg" alt="Cleaning product"></div>
+        <div class="prod-slide"><img src="https://m.media-amazon.com/images/I/41Eoqx4IBEL._SL300_.jpg" alt="Cleaning product"></div>
+        <div class="prod-overlay"></div>
+        <div class="prod-dots">
+          <span class="prod-dot active"></span>
+          <span class="prod-dot"></span>
+          <span class="prod-dot"></span>
+          <span class="prod-dot"></span>
+          <span class="prod-dot"></span>
+          <span class="prod-dot"></span>
+          <span class="prod-dot"></span>
+          <span class="prod-dot"></span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -710,5 +730,25 @@ document.addEventListener('keydown',function(e){
   <div class="lightbox-nav lightbox-next" onclick="navLightbox(1,event)">&#8250;</div>
   <div class="lightbox-counter" id="lightboxCounter"></div>
 </div>
-<script src="click-spark.js"></script></body>
+<script src="click-spark.js"></script>
+<script>
+// Products carousel
+(function(){
+  var carousel = document.getElementById('prod-carousel');
+  if(!carousel) return;
+  var slides = carousel.querySelectorAll('.prod-slide');
+  var dots = carousel.querySelectorAll('.prod-dot');
+  var idx = 0;
+  function goTo(n){
+    slides[idx].classList.remove('active');
+    dots[idx].classList.remove('active');
+    idx = (n + slides.length) % slides.length;
+    slides[idx].classList.add('active');
+    dots[idx].classList.add('active');
+  }
+  dots.forEach(function(d,i){ d.addEventListener('click', function(){ goTo(i); }); });
+  setInterval(function(){ goTo(idx + 1); }, 2800);
+})();
+</script>
+</body>
 </html>
