@@ -496,9 +496,10 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600;line-height:1.2
         <p class="form-sub">We'll respond within 24 hours</p>
         <form id="quoteForm" onsubmit="handleSubmit(event)">
           <div class="form-row"><div class="form-group"><label for="name">Your name</label><input type="text" id="name" placeholder="Jane Smith" required></div><div class="form-group"><label for="phone">Phone number</label><input type="tel" id="phone" placeholder="(401) 555-1234" required></div></div>
-          <div class="form-group"><label for="email">Email address</label><input type="email" id="email" placeholder="jane@example.com"></div>
-          <div class="form-group"><label for="service">Service type</label><select id="service"><option value="">Select a service</option><option>Standard Cleaning</option><option>Deep Cleaning</option><option>Move-in / Move-out Cleaning</option><option>Office Cleaning</option><option>Other</option></select></div>
-          <div class="form-group"><label for="message">Tell us about your space</label><textarea id="message" placeholder="Number of rooms, any specific needs, preferred dates..."></textarea></div>
+          <div class="form-row"><div class="form-group"><label for="email">Email address</label><input type="email" id="email" placeholder="jane@example.com" required></div><div class="form-group"><label for="city">City</label><input type="text" id="city" placeholder="Providence, Cranston…" required></div></div>
+          <div class="form-row"><div class="form-group"><label for="service">Service type</label><select id="service" required><option value="">Select a service</option><option>Standard Cleaning</option><option>Deep Cleaning</option><option>Move-in / Move-out Cleaning</option><option>Office Cleaning</option><option>Other</option></select></div><div class="form-group"><label for="frequency">Frequency</label><select id="frequency"><option value="">One-time or recurring?</option><option>One-time</option><option>Weekly</option><option>Bi-weekly</option><option>Monthly</option></select></div></div>
+          <div class="form-row"><div class="form-group"><label for="beds">Bedrooms</label><select id="beds"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div><div class="form-group"><label for="baths">Bathrooms</label><select id="baths"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4+</option></select></div><div class="form-group"><label for="date">Preferred date</label><input type="date" id="date"></div></div>
+          <div class="form-group"><label for="message">Anything else we should know?</label><textarea id="message" placeholder="Pets, access notes, special requests…"></textarea></div>
           <button type="submit" class="btn-submit">Send Request</button>
         </form>
       </div>
@@ -533,7 +534,62 @@ document.getElementById('navToggle').addEventListener('click',()=>document.getEl
 document.querySelectorAll('#mobileMenu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('open')));
 const obs=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
-function handleSubmit(e){e.preventDefault();const b=e.target.querySelector('.btn-submit');b.textContent="Sent! We'll be in touch ✓";b.style.background='#2E7D32';setTimeout(()=>{b.textContent='Send Request';b.style.background='';e.target.reset()},3000)}
+async function handleSubmit(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('.btn-submit');
+  const name      = document.getElementById('name').value.trim();
+  const phone     = document.getElementById('phone').value.trim();
+  const email     = document.getElementById('email').value.trim();
+  const city      = document.getElementById('city').value.trim();
+  const service   = document.getElementById('service').value || 'Not selected';
+  const frequency = document.getElementById('frequency').value || 'Not selected';
+  const beds      = document.getElementById('beds').value || '—';
+  const baths     = document.getElementById('baths').value || '—';
+  const date      = document.getElementById('date').value || 'Flexible';
+  const message   = document.getElementById('message').value.trim();
+
+  const text = [
+    '🧹 *New Booking Request — eahousekeeper.com*',
+    '',
+    `👤 *Name:* ${name}`,
+    `📞 *Phone:* ${phone}`,
+    `📧 *Email:* ${email}`,
+    `📍 *City:* ${city}`,
+    '',
+    `🏠 *Service:* ${service}`,
+    `🔁 *Frequency:* ${frequency}`,
+    `🛏 *Bedrooms:* ${beds}  |  🚿 *Bathrooms:* ${baths}`,
+    `📅 *Preferred date:* ${date}`,
+    message ? `📝 *Notes:* ${message}` : '',
+    '',
+    `🕐 ${new Date().toLocaleString('en-US', {timeZone:'America/New_York'})}`
+  ].filter(l => l !== '').join('\n');
+
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('https://api.telegram.org/bot8786204695:AAGDEsHDdSPFHvcaRTnfa3-re8P0vuG_UoU/sendMessage', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({chat_id: '8604482464', text, parse_mode: 'Markdown'})
+    });
+    const data = await res.json();
+    if(data.ok){
+      btn.textContent = "Sent! We'll be in touch ✓";
+      btn.style.background = '#2E7D32';
+      e.target.reset();
+    } else {
+      throw new Error(data.description);
+    }
+  } catch(err) {
+    btn.textContent = 'Error — please call us';
+    btn.style.background = '#c0392b';
+  } finally {
+    btn.disabled = false;
+    setTimeout(()=>{ btn.textContent = 'Send Request'; btn.style.background = ''; }, 4000);
+  }
+}
 window.addEventListener('scroll',()=>{document.getElementById('navbar').style.boxShadow=window.scrollY>50?'0 2px 20px rgba(96,89,81,0.08)':'none'});
 // Carousel: auto-scroll + drag + lightbox (fixed click vs drag)
 (function(){
